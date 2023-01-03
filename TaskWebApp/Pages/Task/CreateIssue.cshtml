@@ -1,0 +1,28 @@
+﻿@page
+@using TaskWebApp.Models;
+@model TaskWebApp.Pages.Task.CreateIssueModel
+@{
+}
+<div class="m-2">
+    <form method="post">
+        <div class="form-group">
+            <label class="form-label" asp-for="Issue.Title">Title</label>
+            <input class="form-control" asp-for="Issue.Title" />
+            <span asp-validation-for="Issue.Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-label" asp-for="Issue.Description">Description</label>
+            <input class="form-control" asp-for="Issue.Description" />
+            <span asp-validation-for="Issue.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-label" asp-for="Issue.IssueType">Type</label>
+            <select class="form-select" asp-for="Issue.IssueType" asp-items="Html.GetEnumSelectList<IssueType>()"></select>
+        </div>
+        <div class="form-group">
+            <label class="form-label" asp-for="Issue.Priority">Priority</label>
+            <select class="form-select" asp-for="Issue.Priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+        </div>
+        <button class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>

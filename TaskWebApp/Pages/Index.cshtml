@@ -1,0 +1,161 @@
+﻿@page
+@using TaskWebApp.Models;
+@model IndexModel
+@{
+    ViewData["Title"] = "Tasks";
+}
+<style>
+    /* The heart of the matter */
+    .vertical-scrollable > .card-body {
+        height: 40em;
+        overflow-y: auto;
+    }
+
+    .fullname {
+        border-radius: 5px
+    }
+
+</style>
+
+@if (Request.Query["status"] == "NotFound")
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Project not found.</strong> Please try again.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-9"><h3>@ViewData["Title"]</h3></div>
+    <div class="col-md-3 float-right mb-3">
+        <a asp-page="./Task/CreateIssue" class="btn btn-sm btn-primary">Add New Task</a>
+    </div>
+</div>
+<hr />
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>On Hold</h4>
+            </div>
+            <div class="vertical-scrollable">
+                <div class="card-body">
+                    @foreach (var issue in Model.Issues.Where(c => c.IssueStatus == IssueStatus.NotStarted))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">@issue.Title</h5>
+                                <span class="@issue.IssueType.ToCssClass()">@issue.IssueType</span>
+                                <span class="@issue.Priority.ToCssClass()">@issue.Priority</span>
+                                <p class="card-text"><small class="text-muted">@issue.Description</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <small>@issue.CreatedDate</small>
+                                @if (@issue.Assign != null)
+                                {
+                                    <div class="fullname" title="@issue.Assign.FirstName + ' ' + @issue.Assign.Surname">@issue.Assign.FirstName.Substring(0,1)@issue.Assign.FirstName.Substring(0,1)</div>
+                                }
+                                <a class="badge btn-secondary" asp-page="./Task/EditIssue" asp-route-id="@issue.Id">Edit</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>In Progress</h4>
+            </div>
+            <div class="vertical-scrollable">
+                <div class="card-body">
+                    @foreach (var issue in Model.Issues.Where(c => c.IssueStatus == IssueStatus.InProgress))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">@issue.Title</h5>
+                                <span class="@issue.IssueType.ToCssClass()">@issue.IssueType</span>
+                                <span class="@issue.Priority.ToCssClass()">@issue.Priority</span>
+                                <p class="card-text"><small class="text-muted">@issue.Description</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <small>@issue.CreatedDate</small>
+                                @if (@issue.Assign != null)
+                                {
+                                    <div class="fullname" title="@issue.Assign.FirstName + ' ' + @issue.Assign.Surname">@issue.Assign.FirstName.Substring(0,1)@issue.Assign.FirstName.Substring(0,1)</div>
+                                }
+                                <a class="badge btn-secondary" asp-page="./Task/EditIssue" asp-route-id="@issue.Id">Edit</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Testing/Pending Release</h4>
+            </div>
+            <div class="vertical-scrollable">
+                <div class="card-body">
+                    @foreach (var issue in Model.Issues.Where(c => c.IssueStatus == IssueStatus.Testing))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">@issue.Title</h5>
+                                <span class="@issue.IssueType.ToCssClass()">@issue.IssueType</span>
+                                <span class="@issue.Priority.ToCssClass()">@issue.Priority</span>
+                                <p class="card-text"><small class="text-muted">@issue.Description</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <small>@issue.CreatedDate</small>
+                                @if (@issue.Assign != null)
+                                {
+                                    <div class="fullname" title="@issue.Assign.FirstName + ' ' + @issue.Assign.Surname">@issue.Assign.FirstName.Substring(0,1)@issue.Assign.FirstName.Substring(0,1)</div>
+                                }
+                                <a class="badge btn-secondary" asp-page="./Task/EditIssue" asp-route-id="@issue.Id">Edit</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Completed</h4>
+            </div>
+            <div class="vertical-scrollable">
+                <div class="card-body">
+                    @foreach (var issue in Model.Issues.Where(c => c.IssueStatus == IssueStatus.Completed))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">@issue.Title</h5>
+                                <span class="@issue.IssueType.ToCssClass()">@issue.IssueType</span>
+                                <span class="@issue.Priority.ToCssClass()">@issue.Priority</span>
+                                <p class="card-text"><small class="text-muted">@issue.Description</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <small>@issue.CreatedDate</small>
+                                @if (@issue.Assign != null)
+                                {
+                                    <div class="fullname" title="@issue.Assign.FirstName + ' ' + @issue.Assign.Surname">@issue.Assign.FirstName.Substring(0,1)@issue.Assign.FirstName.Substring(0,1)</div>
+                                }
+                                <a class="badge btn-secondary" asp-page="./Task/EditIssue" asp-route-id="@issue.Id">Edit</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

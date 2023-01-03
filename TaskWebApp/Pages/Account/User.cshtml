@@ -1,0 +1,40 @@
+﻿@page
+@model TaskWebApp.Pages.Account.UserModel
+@{
+    ViewData["Title"] = "User";
+}
+
+<div class="row">
+    <div class="col-md-9"><h3>@ViewData["Title"]</h3></div>
+    <div class="col-md-3 float-right mb-3">
+        <a asp-page="/Account/CreateUser" class="btn btn-sm btn-primary">Add New User</a>
+    </div>
+</div>
+<hr />
+<div class="mb-2">
+    <table class="table table-bordered datatables display nowrap table-sm ">
+        <thead>
+            <tr>
+
+                <th>@Html.DisplayName("FirstName")</th>
+                <th>@Html.DisplayName("Surname")</th>
+                <th>@Html.DisplayName("Email")</th>
+                <th>@Html.DisplayName("Address")</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in @Model.Users)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.Surname</td>
+                    <td>@user.Email</td>
+                    <td>@user.Address</td>
+                    <td class="text-center"><a asp-page="/Account/EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-light">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
